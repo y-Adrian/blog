@@ -32,7 +32,7 @@
       <a class="sidebar-logo" href="#home">
         <span class="sidebar-logo-icon">✍️</span>
         <div class="sidebar-logo-text">
-          <span class="sidebar-logo-name">我的博客</span>
+          <span class="sidebar-logo-name">Adrian's Space</span>
           <span class="sidebar-logo-desc">记录 · 分享</span>
         </div>
       </a>
@@ -44,13 +44,13 @@
         <span class="nav-icon">🏠</span>
         <span class="nav-text">首页</span>
       </a>
-      <a class="sidebar-nav-link" href="#articles" data-section="articles">
-        <span class="nav-icon">📝</span>
-        <span class="nav-text">全部文章</span>
-      </a>
       <a class="sidebar-nav-link" href="#categories" data-section="categories">
         <span class="nav-icon">📚</span>
         <span class="nav-text">专栏分类</span>
+      </a>
+      <a class="sidebar-nav-link" href="#articles" data-section="articles">
+        <span class="nav-icon">📝</span>
+        <span class="nav-text">全部文章</span>
       </a>
       <a class="sidebar-nav-link" href="#project" data-section="project">
         <span class="nav-icon">🚀</span>
@@ -91,7 +91,7 @@
     </div>
 
     <div class="sidebar-footer">
-      <p class="sidebar-footer-text">用心写，认真活<br>© <span id="footer-year"></span></p>
+      <p class="sidebar-footer-text">行而不辍，未来可期 © <span id="footer-year"></span></p>
     </div>
   </aside>
 
@@ -132,20 +132,6 @@
         </div>
       </section>
 
-      <!-- 文章列表 -->
-      <section class="section" id="section-articles" data-section="articles">
-        <div class="section-header">
-          <div class="section-title">
-            📝 全部文章
-            <span class="section-count" id="article-count">0</span>
-          </div>
-        </div>
-        <div class="section-divider"></div>
-        <div class="post-list" id="post-list">
-          <!-- JS 动态渲染 -->
-        </div>
-      </section>
-
       <!-- 专栏分类 -->
       <section class="section" id="section-categories" data-section="categories">
         <div class="section-header">
@@ -156,6 +142,20 @@
         </div>
         <div class="section-divider"></div>
         <div class="category-list" id="category-list">
+          <!-- JS 动态渲染 -->
+        </div>
+      </section>
+
+      <!-- 文章列表 -->
+      <section class="section" id="section-articles" data-section="articles">
+        <div class="section-header">
+          <div class="section-title">
+            📝 全部文章
+            <span class="section-count" id="article-count">0</span>
+          </div>
+        </div>
+        <div class="section-divider"></div>
+        <div class="post-list" id="post-list">
           <!-- JS 动态渲染 -->
         </div>
       </section>
@@ -252,7 +252,7 @@
 
 <script>
   document.getElementById('footer-year').textContent = new Date().getFullYear();
-  document.getElementById('hero-year-text').textContent = new Date().getFullYear() + ' 年持续更新中';
+  document.getElementById('hero-year-text').textContent = '行而不辍，未来可期 · ' + new Date().getFullYear();
   
   if (typeof marked !== 'undefined') {
     marked.setOptions({ 
