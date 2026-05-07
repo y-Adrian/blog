@@ -1,0 +1,13 @@
+{
+  "category": "摄影",
+  "posts": [
+    {
+      "id": "photography-basics",
+      "title": "摄影初体验",
+      "date": "2026-05-07",
+      "category": "摄影",
+      "tags": ["摄影", "器材", "技巧"],
+      "excerpt": "记录生活中的美好瞬间。"
+    }
+  ]
+}

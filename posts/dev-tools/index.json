@@ -1,0 +1,13 @@
+{
+  "category": "开发工具",
+  "posts": [
+    {
+      "id": "recommended-tools",
+      "title": "开发工具推荐",
+      "date": "2026-05-07",
+      "category": "开发工具",
+      "tags": ["工具", "效率", "IDE"],
+      "excerpt": "分享一些提升开发效率的工具和配置。"
+    }
+  ]
+}

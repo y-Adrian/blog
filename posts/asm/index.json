@@ -1,0 +1,13 @@
+{
+  "category": "汇编",
+  "posts": [
+    {
+      "id": "asm-basics",
+      "title": "汇编语言入门",
+      "date": "2026-05-07",
+      "category": "汇编",
+      "tags": ["汇编", "ARM", "x86"],
+      "excerpt": "了解汇编语言的基础概念和常见架构。"
+    }
+  ]
+}
