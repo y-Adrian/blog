@@ -258,8 +258,8 @@ img { max-width: 100%; display: block; }
   padding: 20px 16px;
   border-top: 1px solid var(--border);
   display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
 }
 
 .social-link {
