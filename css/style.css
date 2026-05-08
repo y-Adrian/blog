@@ -1038,15 +1038,47 @@ img { max-width: 100%; display: block; }
   position: relative;
   max-width: 80vw;
   max-height: 80vh;
-  animation: lightboxZoom 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: lightboxZoom 0.4s ease;
 }
 
 .avatar-lightbox-content img {
   max-width: 100%;
-  max-height: 80vh;
+  max-height: 60vh;
   border-radius: 20px;
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 100px rgba(99, 102, 241, 0.3);
   object-fit: contain;
+}
+
+.avatar-float-text {
+  font-size: 1.4rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--primary), var(--accent), var(--primary));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.1em;
+  padding: 16px 0;
+  animation: floatText 3s ease-in-out infinite;
+  text-align: center;
+}
+
+.avatar-lightbox-content img + .avatar-float-text {
+  animation-delay: 1.5s;
+}
+
+@keyframes floatText {
+  0%, 100% {
+    transform: translateY(0);
+    background-position: 0% center;
+  }
+  50% {
+    transform: translateY(-8px);
+    background-position: 100% center;
+  }
 }
 
 @keyframes lightboxZoom {
