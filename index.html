@@ -5,18 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Adrian's Space</title>
   <meta name="description" content="记录想法，分享见解，留住时光。" />
-  
+
   <!-- 字体 -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  
+
   <!-- 样式 -->
   <link rel="stylesheet" href="css/style.css" />
-  
+
+  <!-- Markdown 编辑器 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simplemde@1.11/dist/simplemde.min.css">
+
+  <!-- 管理面板样式 -->
+  <link rel="stylesheet" href="css/admin-panel.css">
+
   <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80'>📖</text></svg>" />
-  
+
   <!-- SEO -->
   <meta name="theme-color" content="#0a0a0f" />
 </head>
@@ -30,10 +36,10 @@
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
       <a class="sidebar-logo" href="#home">
-        <img class="sidebar-logo-icon" src="images/avatar.png" alt="Adrian" onclick="openAvatarLightbox()" style="cursor: pointer;" />
+        <img class="sidebar-logo-icon" id="sidebar-avatar" src="images/avatar.png" alt="Adrian" onclick="openAvatarLightbox()" style="cursor: pointer;" />
         <div class="sidebar-logo-text">
           <span class="sidebar-logo-name">Adrian's Space</span>
-          <span class="sidebar-logo-desc">道阻且长 · 行则将至</span>
+          <span class="sidebar-logo-desc" id="sidebar-signature">道阻且长 · 行则将至</span>
         </div>
       </a>
     </div>
@@ -61,6 +67,31 @@
         <span class="nav-text">技术栈</span>
       </a>
     </nav>
+
+    <!-- 用户面板（未登录时显示登录按钮） -->
+    <div id="user-panel" class="user-panel">
+      <div id="login-section" class="login-section">
+        <button class="login-btn" onclick="showLoginModal()">
+          <span>🔐</span> 登录
+        </button>
+      </div>
+      <div id="user-section" class="user-section hidden">
+        <button class="write-btn" onclick="showArticleEditor()">
+          ✍️ 写文章
+        </button>
+        <div class="user-menu">
+          <button class="user-menu-btn" onclick="toggleUserDropdown()">
+            <img id="user-avatar-small" class="user-avatar-small" src="images/avatar.png" alt="avatar">
+            <span id="user-name">Admin</span>
+            <span class="dropdown-arrow">▼</span>
+          </button>
+          <div id="user-dropdown" class="user-dropdown hidden">
+            <a href="#" onclick="showSettings()">⚙️ 设置</a>
+            <a href="#" onclick="logout()">🚪 退出</a>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- 社交链接 -->
     <div class="sidebar-social">
@@ -213,44 +244,208 @@
   </div>
 </div>
 
+<!-- 登录模态框 -->
+<div id="login-modal" class="modal hidden">
+  <div class="modal-overlay" onclick="closeLoginModal()"></div>
+  <div class="modal-content login-modal">
+    <div class="modal-header">
+      <h3 id="login-modal-title">登录</h3>
+      <button class="modal-close" onclick="closeLoginModal()">✕</button>
+    </div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login" onclick="switchAuthTab('login')">登录</button>
+      <button class="auth-tab" data-tab="register" onclick="switchAuthTab('register')">注册</button>
+    </div>
+
+    <!-- 登录表单 -->
+    <form id="login-form" class="auth-form" onsubmit="handleLogin(event)">
+      <div class="form-group">
+        <label>用户名</label>
+        <input type="text" name="username" required placeholder="输入用户名">
+      </div>
+      <div class="form-group">
+        <label>密码</label>
+        <input type="password" name="password" required placeholder="输入密码">
+      </div>
+      <button type="submit" class="btn btn-primary btn-full">登录</button>
+    </form>
+
+    <!-- 注册表单 -->
+    <form id="register-form" class="auth-form hidden" onsubmit="handleRegister(event)">
+      <div class="form-group">
+        <label>用户名</label>
+        <input type="text" name="username" required placeholder="3-50个字符" minlength="3" maxlength="50">
+      </div>
+      <div class="form-group">
+        <label>密码</label>
+        <input type="password" name="password" required placeholder="至少6个字符" minlength="6">
+      </div>
+      <div class="form-group">
+        <label>确认密码</label>
+        <input type="password" name="confirm_password" required placeholder="再次输入密码">
+      </div>
+      <button type="submit" class="btn btn-primary btn-full">注册</button>
+    </form>
+
+    <div id="auth-message" class="message hidden"></div>
+  </div>
+</div>
+
+<!-- 文章编辑器模态框 -->
+<div id="editor-modal" class="modal hidden">
+  <div class="modal-overlay" onclick="closeEditorModal()"></div>
+  <div class="modal-content editor-modal">
+    <div class="modal-header">
+      <h3 id="editor-modal-title">写文章</h3>
+      <button class="modal-close" onclick="closeEditorModal()">✕</button>
+    </div>
+    <form id="editor-form" onsubmit="saveArticle(event)">
+      <input type="hidden" id="editor-article-id">
+      <div class="form-row">
+        <div class="form-group flex-2">
+          <label>标题</label>
+          <input type="text" id="editor-title" class="form-input" required placeholder="输入文章标题">
+        </div>
+        <div class="form-group flex-1">
+          <label>专栏</label>
+          <select id="editor-category" class="form-select" required>
+            <option value="">选择专栏</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>摘要</label>
+        <textarea id="editor-summary" class="form-textarea" rows="2" placeholder="简要描述文章内容（可选）"></textarea>
+      </div>
+      <div class="form-group">
+        <label>标签</label>
+        <input type="text" id="editor-tags" class="form-input" placeholder="多个标签用逗号分隔，如: Go, 编程, 教程">
+      </div>
+      <div class="form-group">
+        <label>正文 (Markdown)</label>
+        <textarea id="editor-content" class="form-textarea markdown-editor" placeholder="使用 Markdown 编写文章内容"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="checkbox-label">
+          <input type="checkbox" id="editor-published">
+          <span>立即发布</span>
+        </label>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeEditorModal()">取消</button>
+        <button type="button" class="btn btn-secondary" onclick="saveArticleDraft()">保存草稿</button>
+        <button type="submit" class="btn btn-primary">保存并发布</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- 设置模态框 -->
+<div id="settings-modal" class="modal hidden">
+  <div class="modal-overlay" onclick="closeSettingsModal()"></div>
+  <div class="modal-content settings-modal">
+    <div class="modal-header">
+      <h3>个人设置</h3>
+      <button class="modal-close" onclick="closeSettingsModal()">✕</button>
+    </div>
+
+    <div class="settings-section">
+      <h4>头像设置</h4>
+      <div class="avatar-upload">
+        <img id="settings-avatar" class="settings-avatar" src="images/avatar.png" alt="avatar">
+        <div class="avatar-actions">
+          <input type="file" id="avatar-upload-input" accept="image/*" style="display:none" onchange="uploadAvatar(this)">
+          <button class="btn btn-secondary" onclick="document.getElementById('avatar-upload-input').click()">更换头像</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <h4>签名设置</h4>
+      <form onsubmit="updateSignature(event)">
+        <div class="form-group">
+          <label>个性签名</label>
+          <input type="text" id="settings-signature" class="form-input" placeholder="这个人很懒，什么都没写">
+        </div>
+        <button type="submit" class="btn btn-primary">保存</button>
+      </form>
+    </div>
+
+    <div class="settings-section">
+      <h4>修改密码</h4>
+      <form onsubmit="changePassword(event)">
+        <div class="form-group">
+          <label>原密码</label>
+          <input type="password" id="old-password" class="form-input" required>
+        </div>
+        <div class="form-group">
+          <label>新密码</label>
+          <input type="password" id="new-password" class="form-input" required minlength="6">
+        </div>
+        <div class="form-group">
+          <label>确认新密码</label>
+          <input type="password" id="confirm-password" class="form-input" required>
+        </div>
+        <button type="submit" class="btn btn-primary">修改密码</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Toast 提示 -->
+<div id="toast" class="toast hidden"></div>
+
 <!-- Markdown 解析器 -->
 <script src="https://cdn.jsdelivr.net/npm/marked@9/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/simplemde@1.11/dist/simplemde.min.js"></script>
 
 <!-- 博客逻辑 -->
 <script src="js/blog.js"></script>
 
+<!-- API 模块 -->
+<script src="js/api.js"></script>
+
+<!-- 管理面板逻辑 -->
+<script src="js/admin-panel.js"></script>
+
 <script>
   document.getElementById('footer-year').textContent = new Date().getFullYear();
   document.getElementById('hero-year-text').innerHTML = '持续更新中';
-  
+
   if (typeof marked !== 'undefined') {
-    marked.setOptions({ 
-      breaks: true, 
+    marked.setOptions({
+      breaks: true,
       gfm: true,
       headerIds: false,
       mangle: false
     });
   }
-  
+
   // 头像灯箱功能
   function openAvatarLightbox() {
     const lightbox = document.getElementById('avatar-lightbox');
     lightbox.classList.add('active');
     document.body.style.overflow = 'hidden';
   }
-  
+
   function closeAvatarLightbox() {
     const lightbox = document.getElementById('avatar-lightbox');
     lightbox.classList.remove('active');
     document.body.style.overflow = '';
   }
-  
+
   // ESC 关闭灯箱
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
       closeAvatarLightbox();
+      closeLoginModal();
+      closeEditorModal();
+      closeSettingsModal();
     }
   });
+
+  // 页面加载完成后检查登录状态
+  document.addEventListener('DOMContentLoaded', checkLoginStatus);
 </script>
 
 </body>
