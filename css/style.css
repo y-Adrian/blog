@@ -311,14 +311,15 @@ img { max-width: 100%; display: block; }
    =========================== */
 .section {
   min-height: 100vh;
-  padding: 100px 0 60px;
+  padding: 60px 0 40px;
   opacity: 1;
   transform: translateY(0);
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .section:first-child {
-  padding-top: 60px;
+  min-height: auto;
+  padding-top: 40px;
 }
 
 .section.animating-out {
@@ -335,23 +336,23 @@ img { max-width: 100%; display: block; }
    Hero 区域
    =========================== */
 .hero {
-  padding: 40px 0 50px;
+  padding: 20px 0 30px;
 }
 
 .hero-badge {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 16px;
+  padding: 6px 14px;
   border-radius: var(--radius-full);
   background: var(--bg-glass);
   border: 1px solid var(--bg-glass-border);
   backdrop-filter: blur(10px);
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 700;
   color: var(--primary);
   letter-spacing: 0.02em;
-  margin-bottom: 28px;
+  margin-bottom: 20px;
 }
 
 .hero-badge-dot {
@@ -368,11 +369,19 @@ img { max-width: 100%; display: block; }
 }
 
 .hero-title {
-  font-size: clamp(2.5rem, 6vw, 3.8rem);
+  font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 900;
-  line-height: 1.1;
+  line-height: 1.15;
   letter-spacing: -0.04em;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.3em;
+}
+
+.title-line {
+  display: inline-block;
 }
 
 .hero-title .accent {
@@ -383,28 +392,28 @@ img { max-width: 100%; display: block; }
 }
 
 .hero-subtitle {
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   color: var(--text-secondary);
-  max-width: 560px;
-  line-height: 1.9;
-  margin-bottom: 36px;
+  max-width: 520px;
+  line-height: 1.7;
+  margin-bottom: 24px;
 }
 
 /* CTA 按钮 */
 .hero-cta {
   display: flex;
-  gap: 14px;
+  gap: 12px;
   flex-wrap: wrap;
-  margin-bottom: 48px;
+  margin-bottom: 32px;
 }
 
 .cta-btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 14px 28px;
+  padding: 12px 24px;
   border-radius: var(--radius);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 700;
   transition: var(--transition);
   cursor: pointer;
@@ -442,7 +451,7 @@ img { max-width: 100%; display: block; }
 .hero-stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+  gap: 14px;
 }
 
 .stat-card {
@@ -450,7 +459,7 @@ img { max-width: 100%; display: block; }
   backdrop-filter: blur(20px);
   border: 1px solid var(--bg-glass-border);
   border-radius: var(--radius-lg);
-  padding: 28px 20px;
+  padding: 20px 16px;
   text-align: center;
   transition: var(--transition);
   animation: fadeInUp 0.6s ease both;
@@ -474,12 +483,12 @@ img { max-width: 100%; display: block; }
 }
 
 .stat-icon {
-  font-size: 2rem;
-  margin-bottom: 12px;
+  font-size: 1.8rem;
+  margin-bottom: 10px;
 }
 
 .stat-value {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-weight: 900;
   letter-spacing: -0.03em;
   background: linear-gradient(135deg, var(--text), var(--primary));
@@ -491,7 +500,7 @@ img { max-width: 100%; display: block; }
 }
 
 .stat-label {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: var(--text-muted);
   font-weight: 600;
 }
