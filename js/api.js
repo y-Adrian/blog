@@ -1,7 +1,7 @@
 // API 模块 - 处理所有后端通信
 // API_BASE 需要在部署时配置为你的服务器地址
 
-const API_BASE = ''; // 留空表示同源，部署时填写如 'https://your-server.com/api'
+const API_BASE = 'http://192.168.31.135:8080'; // 服务器地址
 
 // 获取 Token
 function getToken() {
