@@ -145,11 +145,7 @@ img { max-width: 100%; display: block; }
   width: 46px;
   height: 46px;
   border-radius: 14px;
-  background: linear-gradient(135deg, var(--primary), var(--accent));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.3rem;
+  object-fit: cover;
   box-shadow: var(--shadow-md), 0 0 20px rgba(99, 102, 241, 0.3);
   transition: var(--transition);
   flex-shrink: 0;
