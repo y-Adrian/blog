@@ -1061,22 +1061,18 @@ img { max-width: 100%; display: block; }
   -webkit-text-fill-color: transparent;
   background-clip: text;
   letter-spacing: 0.1em;
-  padding: 16px 0;
-  animation: floatText 3s ease-in-out infinite;
+  padding: 12px 0;
+  animation: floatUp 3s ease-in-out infinite;
   text-align: center;
 }
 
-.avatar-lightbox-content img + .avatar-float-text {
-  animation-delay: 1.5s;
-}
-
-@keyframes floatText {
+@keyframes floatUp {
   0%, 100% {
     transform: translateY(0);
     background-position: 0% center;
   }
   50% {
-    transform: translateY(-8px);
+    transform: translateY(-10px);
     background-position: 100% center;
   }
 }
