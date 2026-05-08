@@ -311,15 +311,28 @@ img { max-width: 100%; display: block; }
    =========================== */
 .section {
   min-height: 100vh;
-  padding: 60px 0 40px;
+  padding: 60px 0;
   opacity: 1;
   transform: translateY(0);
   transition: opacity 0.5s ease, transform 0.5s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .section:first-child {
-  min-height: auto;
-  padding-top: 40px;
+  min-height: 100vh;
+  padding-top: 80px;
+  padding-bottom: 40px;
+}
+
+/* 确保首页内容占满视口 */
+#section-home .content-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  min-height: calc(100vh - 120px);
 }
 
 .section.animating-out {
