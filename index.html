@@ -30,7 +30,7 @@
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
       <a class="sidebar-logo" href="#home">
-        <img class="sidebar-logo-icon" src="images/avatar.jpg" alt="Adrian" />
+        <img class="sidebar-logo-icon" src="images/avatar.jpg" alt="Adrian" onclick="openAvatarLightbox()" style="cursor: pointer;" />
         <div class="sidebar-logo-text">
           <span class="sidebar-logo-name">Adrian's Space</span>
           <span class="sidebar-logo-desc">道阻且长 · 行则将至</span>
@@ -233,6 +233,13 @@
 
 </div>
 
+<!-- 头像灯箱 -->
+<div class="avatar-lightbox" id="avatar-lightbox" onclick="closeAvatarLightbox()">
+  <div class="avatar-lightbox-content">
+    <img src="images/avatar.jpg" alt="Adrian" />
+  </div>
+</div>
+
 <!-- 文章详情弹窗 -->
 <div class="post-modal" id="post-modal">
   <div class="post-modal-overlay" onclick="closePostModal()"></div>
@@ -252,7 +259,7 @@
 
 <script>
   document.getElementById('footer-year').textContent = new Date().getFullYear();
-  document.getElementById('hero-year-text').textContent = '持续更新中';
+  document.getElementById('hero-year-text').innerHTML = '持续更新中 · 行而不辍，未来可期';
   
   if (typeof marked !== 'undefined') {
     marked.setOptions({ 
@@ -262,6 +269,26 @@
       mangle: false
     });
   }
+  
+  // 头像灯箱功能
+  function openAvatarLightbox() {
+    const lightbox = document.getElementById('avatar-lightbox');
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  
+  function closeAvatarLightbox() {
+    const lightbox = document.getElementById('avatar-lightbox');
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  
+  // ESC 关闭灯箱
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeAvatarLightbox();
+    }
+  });
 </script>
 
 </body>
