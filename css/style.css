@@ -1052,6 +1052,14 @@ img { max-width: 100%; display: block; }
   object-fit: contain;
 }
 
+.avatar-float-texts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  animation: floatUp 3s ease-in-out infinite;
+}
+
 .avatar-float-text {
   font-size: 1.4rem;
   font-weight: 800;
@@ -1061,8 +1069,6 @@ img { max-width: 100%; display: block; }
   -webkit-text-fill-color: transparent;
   background-clip: text;
   letter-spacing: 0.1em;
-  padding: 12px 0;
-  animation: floatUp 3s ease-in-out infinite;
   text-align: center;
 }
 
